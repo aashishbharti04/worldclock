@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WorldClock — Time Zones & Meeting Planner</title>
+  <meta name="description" content="See the current time across cities worldwide and instantly find the best overlapping hours to meet across time zones. Accurate, private, and 100% in your browser." />
+  <meta name="theme-color" content="#0b1020" />
+  <meta property="og:title" content="WorldClock — Time Zones & Meeting Planner" />
+  <meta property="og:description" content="Compare time zones and find overlapping working hours for global meetings. Fully offline." />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://aashishbharti04.github.io/worldclock/" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="topbar">
+    <div class="brand">🌍 World<span class="accent">Clock</span></div>
+    <div class="topbar-right">
+      <span class="priv">🔒 Offline · private</span>
+      <a class="nav-link" href="https://github.com/aashishbharti04/worldclock" target="_blank" rel="noopener">GitHub</a>
+      <button class="icon-btn" id="btn-theme" aria-label="Toggle theme">🌙</button>
+    </div>
+  </header>
+
+  <main class="main" id="main">
+    <section class="hero">
+      <h1>What time is it <span class="grad">everywhere</span>?</h1>
+      <p class="sub">Add cities to compare live times, then use the planner to find the best
+        overlapping hours to meet across time zones — accurate &amp; fully in your browser.</p>
+    </section>
+
+    <div class="toolbar">
+      <div class="search-wrap">
+        <input id="search" class="search" type="search" placeholder="🔎 Add a city (e.g. Tokyo, Berlin, New York)…" autocomplete="off" aria-label="Search cities" />
+        <div id="suggest" class="suggest" hidden></div>
+      </div>
+      <div class="toolbar-right">
+        <label class="check"><input type="checkbox" id="fmt12" /> 12-hour</label>
+        <button class="btn ghost" id="btn-now">Reset to now</button>
+      </div>
+    </div>
+
+    <section id="clocks" class="clocks" aria-live="polite"></section>
+
+    <section class="planner">
+      <div class="planner-head">
+        <h2>🗓️ Meeting planner</h2>
+        <div class="work-controls">
+          <label>Working hours</label>
+          <input type="number" id="work-start" min="0" max="23" value="9" class="num" aria-label="Work start hour" />
+          <span>–</span>
+          <input type="number" id="work-end" min="1" max="24" value="18" class="num" aria-label="Work end hour" />
+          <span id="ref-note" class="ref-note"></span>
+        </div>
+      </div>
+      <p class="planner-hint">Columns are hours in your reference city. Green = working hours;
+        a highlighted column means <b>everyone</b> is within working hours. Click a column to pin a time.</p>
+      <div id="planner" class="planner-grid"></div>
+      <div id="best" class="best"></div>
+    </section>
+  </main>
+
+  <footer class="footer" id="footer"></footer>
+  <script type="module" src="assets/js/app.js"></script>
+</body>
+</html>

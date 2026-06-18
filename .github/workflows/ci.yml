@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  checks:
+    name: Build verification & checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: JavaScript syntax check
+        run: |
+          for f in $(find assets/js -name '*.js'); do
+            echo "checking $f"
+            node --check "$f"
+          done
+
+      - name: Required files present
+        run: |
+          for f in index.html assets/css/style.css assets/js/app.js assets/js/tz.js assets/js/cities.js LICENSE README.md; do
+            test -f "$f" || { echo "::error::missing $f"; exit 1; }
+          done
+          echo "All required files present."
+
+      - name: No secrets committed
+        run: |
+          if git ls-files | grep -E '(^|/)\.env$'; then
+            echo "::error::.env file committed"; exit 1
+          fi
+          echo "No .env committed."
+
+      - name: HTML references resolve
+        run: |
+          grep -q 'assets/css/style.css' index.html
+          grep -q 'assets/js/app.js' index.html
+          echo "index.html references OK."
